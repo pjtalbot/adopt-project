@@ -39,12 +39,16 @@ def show_pet_form():
         age = form.age.data
         notes = form.notes.data
         available = form.available.data
-        flash(f"Added {name} the {species}")
-        
-        new_pet = Pet(
+        new_pet = Pet(name=name, species=species, photo_url=photo_url, age=age, notes=notes, available=available
             
         )
-        return redirect("/new_pet")
+        db.session.add(new_pet)
+        db.session.commit()
+
+        flash(f"Added {name} the {species}")
+        
+       
+        return redirect(f"/adopt/{new_pet.id}")
 
     else:
         return render_template(
@@ -54,8 +58,6 @@ def show_pet_form():
 def show_pets():
 
     pets = Pet.query.all()
-    
-
 
     return render_template('adopt.html', pets=pets)
 
@@ -78,6 +80,14 @@ def show_pet_profile(pet_id):
     else:
         flash("Edit failed")
         return render_template('pet_profile.html', pet=pet, form=form, msgs=msgs)
+
+# @app.route('/adopt/<int:pet_id>/edit', methods=["GET", "POST"])
+# def edit_pet(pet_id):
+
+#     msgs = get_flashed_messages()
+
+#     pet = Pet.query.get_or_404(pet_id)
+
 
 
 

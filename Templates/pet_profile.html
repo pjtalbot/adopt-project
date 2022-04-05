@@ -11,6 +11,13 @@
 <p>Age: {{ pet.age }}</p>
 <p>Available?: {{ pet.available }}</p>
 
+<h2>Edit Pet</h2>
+
+
+{% for msg in msgs %}
+  <h3>{{ msg }}</h3>
+{% endfor %}
+
 <form method="POST">
 
     {% for field in form %}
